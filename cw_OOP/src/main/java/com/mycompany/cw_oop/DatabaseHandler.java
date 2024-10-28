@@ -23,12 +23,13 @@ public class DatabaseHandler {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public boolean addUser(String username, String password) {
-        String query = "INSERT INTO user (username, password) VALUES (?, ?)";
+    public boolean addUser(String username, String password, String email) {
+        String query = "INSERT INTO user (username, password, email) VALUES (?, ?, ?)";
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             stmt.setString(2, password);
+            stmt.setString(3, email);
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {

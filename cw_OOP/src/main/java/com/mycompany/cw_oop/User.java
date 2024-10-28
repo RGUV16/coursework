@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class User {
     private String username;
     private String password;
+    private String email;
     private DatabaseHandler dbHandler;
 
     public User(DatabaseHandler dbHandler) {
@@ -25,7 +26,9 @@ public class User {
         username = scanner.nextLine();
         System.out.print("Enter password: ");
         password = scanner.nextLine();
-        return dbHandler.addUser(username, password);
+        System.out.print("Enter email: ");
+        email = scanner.nextLine();
+        return dbHandler.addUser(username, password, email);
     }
 
     public boolean login() {
