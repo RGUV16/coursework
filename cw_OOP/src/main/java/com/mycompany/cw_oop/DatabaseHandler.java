@@ -13,6 +13,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class DatabaseHandler {
     private static final String URL = "jdbc:mysql://localhost:3306/article_recommendation";
@@ -50,6 +53,29 @@ public class DatabaseHandler {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public List<Article> getRandomArticles(int count) {
+        List<Article> articles = new ArrayList<>();
+        String query = "SELECT * FROM articles ORDER BY RAND() LIMIT ?";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, count);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String category = rs.getString("category");
+                String title = rs.getString("title");
+                String content = rs.getString("content");
+                String author = rs.getString("author");
+
+                articles.add(new Article(category, title, content, author));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articles;
     }
 }
 

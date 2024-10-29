@@ -8,6 +8,7 @@ package com.mycompany.cw_oop;
  *
  * @author HP
  */
+import java.util.List;
 import java.util.Scanner;
 
 public class Cw_OOP {
@@ -16,7 +17,7 @@ public class Cw_OOP {
         User user = new User(dbHandler);
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to the Personalized News Recommendation System!\nInsert the number of the selcted choice.");
+        System.out.println("WELCOME TO THE PRSONALIZED NEWS RECOMMONDATION SYSTEM!\n\nInsert the number of the selcted choice.");
         System.out.println("1. Register");
         System.out.println("2. Login");
         int choice = scanner.nextInt();
@@ -35,7 +36,7 @@ public class Cw_OOP {
         }
 
         if (loggedIn) {
-            System.out.println("\n\nLogin successful! Welcome!\nInsert the number of the selected choice.");
+            System.out.println("\nLogin successful! Welcome!\n\nInsert the number of the selected choice.");
             System.out.println("1. View Available Articles (All Categories)");
             System.out.println("2. View Business Articles");
             System.out.println("3. View Sports Articles");
@@ -51,8 +52,25 @@ public class Cw_OOP {
             System.out.println("13. View Entertainment Articles");
             System.out.println("14. View Technological Articles");
             System.out.println("15. Get Recommendations");
+            
+            int articleChoice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (articleChoice == 1) {
+                // Fetch and display a random selection of articles
+                List<Article> articles = dbHandler.getRandomArticles(5); // Get 5 random articles
+                for (Article article : articles) {
+                    System.out.println("Category: " + article.getCategory());
+                    System.out.println("Title: " + article.getTitle());
+                    System.out.println(article.getContent());
+                    System.out.println("Author: " + article.getAuthor());
+                    System.out.println();
+                }
+            } else {
+                // Handle other choices
+            }
         } else {
-            System.out.println("Login failed.");
+            System.out.println("Login failed. Username or password must be incorrect. Please enter valid details!");
         }
     }
 }

@@ -19,6 +19,10 @@ public class User {
     public User(DatabaseHandler dbHandler) {
         this.dbHandler = dbHandler;
     }
+    
+    private boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
 
     public boolean register() {
         Scanner scanner = new Scanner(System.in);
@@ -26,8 +30,13 @@ public class User {
         username = scanner.nextLine();
         System.out.print("Enter password: ");
         password = scanner.nextLine();
-        System.out.print("Enter email: ");
-        email = scanner.nextLine();
+        do {
+            System.out.print("Enter email: ");
+            email = scanner.nextLine();
+            if (!isValidEmail(email)) {
+                System.out.println("Invalid email format. Please enter a valid email.");
+            }
+        } while (!isValidEmail(email));
         return dbHandler.addUser(username, password, email);
     }
 
