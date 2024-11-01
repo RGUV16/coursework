@@ -27,14 +27,14 @@ public class DatabaseHandler {
 
     public DatabaseHandler() {
         categoryKeywords = new HashMap<>();
-        categoryKeywords.put("Business", Arrays.asList("companies", "sustainability", "business", "strategy", "economic"));
-        categoryKeywords.put("Sports", Arrays.asList("sports", "performance", "success", "player", "championship"));
-        categoryKeywords.put("Science", Arrays.asList("scientists", "Research", "energy", "development", "scientific"));
-        categoryKeywords.put("Educational", Arrays.asList("education", "learning", "Schools", "students", "policies"));
+        categoryKeywords.put("Business", Arrays.asList("companies", "business", "strategy", "economic"));
+        categoryKeywords.put("Sports", Arrays.asList("sports",  "player", "championship"));
+        categoryKeywords.put("Science", Arrays.asList("scientists", "Research", "scientific"));
+        categoryKeywords.put("Educational", Arrays.asList("education", "learning", "Schools", "students"));
         categoryKeywords.put("Political", Arrays.asList("Political", "United", "Global", "Nations", "election"));
         categoryKeywords.put("Health", Arrays.asList("treatment", "disease", "healthcare", "hospitals", "medical"));
         categoryKeywords.put("Automotive", Arrays.asList("automotive", "models", "vehicles", "cars", "insurance"));
-        categoryKeywords.put("Weather", Arrays.asList("weather", "natural", "hurricane", "temperatures", "emergency"));
+        categoryKeywords.put("Weather", Arrays.asList("weather", "hurricane", "temperatures", "emergency"));
         categoryKeywords.put("World-news", Arrays.asList("international", "Countries", "climate", "security", "Tensions"));
         categoryKeywords.put("Real-state", Arrays.asList("housing", "Estate", "properties", "construction"));
         categoryKeywords.put("Lifestyle", Arrays.asList("lifestyle", "stress", "well-being", "living", "daily"));
@@ -85,12 +85,13 @@ public class DatabaseHandler {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
+                int no = rs.getInt("no");
                 String category = rs.getString("category");
                 String title = rs.getString("title");
                 String content = rs.getString("content");
                 String author = rs.getString("author");
 
-                articles.add(new Article(category, title, content, author));
+                articles.add(new Article(no, category, title, content, author));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,12 +121,13 @@ public class DatabaseHandler {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
+                int no = rs.getInt("no");
                 String category = rs.getString("category");
                 String title = rs.getString("title");
                 String content = rs.getString("content");
                 String author = rs.getString("author");
 
-                articles.add(new Article(category, title, content, author));
+                articles.add(new Article(no, category, title, content, author));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,6 +140,20 @@ public class DatabaseHandler {
     public List<String> getKeywordsForCategory(String category) {
         return categoryKeywords.getOrDefault(category, new ArrayList<>());
     }
+    
+    public void recordUserFeedback(String username, Article article, String feedbackType) {
+    String query = "INSERT INTO user_feedback (username, article_no, feedback_type) VALUES (?, ?, ?)";
+    try (Connection conn = connect();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setString(1, username);
+        stmt.setInt(2, article.getNo()); // Use the article number as the article ID
+        stmt.setString(3, feedbackType);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 }
 
 

@@ -9,16 +9,22 @@ package com.mycompany.cw_oop;
  * @author HP
  */
 public class Article {
+    private int no;
     private String category;
     private String title;
     private String content;
     private String author;
 
-    public Article(String category, String title, String content, String author) {
+    public Article(int no, String category, String title, String content, String author) {
+        this.no = no;
         this.category = category;
         this.title = title;
         this.content = content;
         this.author = author;
+    }
+    
+    public int getNo() {
+        return no;
     }
 
     public String getCategory() {

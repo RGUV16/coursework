@@ -135,6 +135,7 @@ public class Cw_OOP {
                     System.out.println("No articles found for the selected category.");
                 } else {
                     for (Article article : articles) {
+                        System.out.println("Article Number: " + article.getNo());
                         if (showCategory) {
                             System.out.println("Category: " + article.getCategory());
                         }
@@ -142,6 +143,28 @@ public class Cw_OOP {
                         System.out.println(article.getContent());
                         System.out.println("Author: " + article.getAuthor());
                         System.out.println();
+                        
+                        // Prompt user for feedback on each article
+                        System.out.println("Do you like this article? (1. Like  2. Dislike  3. Skip)");
+                        int feedbackChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        switch (feedbackChoice) {
+                            case 1:
+                                dbHandler.recordUserFeedback(user.getUsername(), article, "like");
+                                System.out.println("You liked this article.");
+                                break;
+                            case 2:
+                                dbHandler.recordUserFeedback(user.getUsername(), article, "dislike");
+                                System.out.println("You disliked this article.");
+                                break;
+                            case 3:
+                                dbHandler.recordUserFeedback(user.getUsername(), article, "skip"); // Record "skip" feedback
+                                System.out.println("You skipped this article.");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Skipping to the next article.");
+                        }
                     }
                 }
             }

@@ -20,6 +20,21 @@ public class User {
         this.dbHandler = dbHandler;
     }
     
+    // Getter for username
+    public String getUsername() {
+        return username;
+    }
+
+    // Getter for email (optional, add if needed)
+    public String getEmail() {
+        return email;
+    }
+
+    // Getter for password (optional, typically avoided for security)
+    public String getPassword() {
+        return password;
+    }
+    
     private boolean isValidEmail(String email) {
         return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
