@@ -142,18 +142,17 @@ public class DatabaseHandler {
     }
     
     public void recordUserFeedback(String username, Article article, String feedbackType) {
-    String query = "INSERT INTO user_feedback (username, article_no, feedback_type) VALUES (?, ?, ?)";
-    try (Connection conn = connect();
-         PreparedStatement stmt = conn.prepareStatement(query)) {
-        stmt.setString(1, username);
-        stmt.setInt(2, article.getNo()); // Use the article number as the article ID
-        stmt.setString(3, feedbackType);
-        stmt.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        String query = "INSERT INTO user_feedback (username, article_no, feedback_type) VALUES (?, ?, ?)";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setInt(2, article.getNo()); // Use the article number as the article ID
+            stmt.setString(3, feedbackType);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
-
 }
 
 

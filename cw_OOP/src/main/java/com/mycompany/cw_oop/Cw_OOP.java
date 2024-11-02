@@ -165,6 +165,16 @@ public class Cw_OOP {
                             default:
                                 System.out.println("Invalid choice. Skipping to the next article.");
                         }
+                        
+                        // Ask if the user wants to continue or go back to the menu
+                        System.out.println("Do you want to continue reading articles? (1. Yes  2. No)");
+                        int continueChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        if (continueChoice == 2) {
+                            System.out.println("Returning to the main menu...");
+                            break; // Break out of the loop to return to the main menu
+                        }
                     }
                 }
             }
