@@ -60,9 +60,12 @@ public class Cw_OOP {
             // Check if the user is an administrator
             if (user instanceof Administrator) {
                 // Admin options
-                System.out.println("1. Manage Articles");
-                System.out.println("2. View Users");
-                System.out.println("3. Log Out");
+                System.out.println("1. Add Articles");
+                System.out.println("2. Update Articles");
+                System.out.println("3. Delete Articles");
+                System.out.println("4. View Users");
+                System.out.println("5. Delete Users");
+                System.out.println("6. Log Out");
                 
                 while (true) {
                     int adminChoice = scanner.nextInt();
@@ -70,12 +73,37 @@ public class Cw_OOP {
 
                     switch (adminChoice) {
                         case 1:
-                            //((Administrator) user).manageArticles(); // Call method to manage articles
+                            if (((Administrator) user).addArticle()) {
+                                System.out.println("Article added successfully!");
+                            } else {
+                                System.out.println("Failed to add article.");
+                            }
                             break;
                         case 2:
-                            //((Administrator) user).viewUsers(); // Call method to view users
+                            if (((Administrator) user).updateArticle()) {
+                                System.out.println("Article updated successfully!");
+                            } else {
+                                System.out.println("Failed to update article.");
+                            }
                             break;
                         case 3:
+                            if (((Administrator) user).deleteArticle()) {
+                                System.out.println("Article deleted successfully!");
+                            } else {
+                                System.out.println("Failed to delete article.");
+                            }
+                            break;
+                        case 4:
+                            ((Administrator) user).viewAllUsers();
+                            break;
+                        case 5:
+                            if (((Administrator) user).deleteUser()) {
+                                System.out.println("User deleted successfully!");
+                            } else {
+                                System.out.println("Failed to delete user.");
+                            }
+                            break;
+                        case 6:
                             System.out.println("Logged out. Exiting the system.");
                             return; // Exit the program
                         default:

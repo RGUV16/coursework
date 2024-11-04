@@ -4,6 +4,8 @@
  */
 package com.mycompany.cw_oop;
 
+import java.sql.Date;
+
 /**
  *
  * @author HP
@@ -14,13 +16,15 @@ public class Article {
     private String title;
     private String content;
     private String author;
+    private Date date;
 
-    public Article(int no, String category, String title, String content, String author) {
+    public Article(int no, String category, String title, String content, String author, Date date) {
         this.no = no;
         this.category = category;
         this.title = title;
         this.content = content;
         this.author = author;
+        this.date = date;
     }
     
     public int getNo() {
@@ -41,5 +45,9 @@ public class Article {
 
     public String getAuthor() {
         return author;
+    }
+    
+    public Date getDate() {
+        return date;
     }
 }

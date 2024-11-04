@@ -8,6 +8,10 @@ package com.mycompany.cw_oop;
  *
  * @author HP
  */
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
 
 public class Administrator extends User {
@@ -40,16 +44,89 @@ public class Administrator extends User {
         return dbHandler.validateAdmin(getUsername(), getPassword());
     }
 
-    // Example method specific to Administrator for managing users
-    public void manageUsers() {
-        System.out.println("Admin managing users...");
-        // Implement user management functionality here
+    public boolean addArticle() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter article category: ");
+        String category = scanner.nextLine();
+        System.out.print("Enter article title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter article content: ");
+        String content = scanner.nextLine();
+        System.out.print("Enter article author: ");
+        String author = scanner.nextLine();
+        System.out.print("Enter article date (yyyy-MM-dd): ");
+        String dateString = scanner.nextLine();
+
+        // Parse date string to java.sql.Date
+        Date date = parseDate(dateString);
+        if (date == null) {
+            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            return false;
+        }
+
+        return dbHandler.addArticle(category, title, content, author, date);
     }
 
-    // Example method for viewing system statistics (optional)
-    public void viewSystemStats() {
-        System.out.println("Admin viewing system statistics...");
-        // Implement system statistics functionality here
+    public boolean updateArticle() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter article number to update: ");
+        int articleNo = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter new article category: ");
+        String category = scanner.nextLine();
+        System.out.print("Enter new article title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter new article content: ");
+        String content = scanner.nextLine();
+        System.out.print("Enter new article author: ");
+        String author = scanner.nextLine();
+        System.out.print("Enter new article date (yyyy-MM-dd): ");
+        String dateString = scanner.nextLine();
+
+        // Parse date string to java.sql.Date
+        Date date = parseDate(dateString);
+        if (date == null) {
+            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            return false;
+        }
+
+        return dbHandler.updateArticle(articleNo, category, title, content, author, date);
+    }
+    
+    private Date parseDate(String dateString) {
+        try {
+            java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+            return new Date(utilDate.getTime()); // Convert to java.sql.Date
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteArticle() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter article number to delete: ");
+        int articleNo = scanner.nextInt();
+        return dbHandler.deleteArticle(articleNo);
+    }
+
+    public void viewAllUsers() {
+        List<String> users = dbHandler.getAllUsers();
+        if (users.isEmpty()) {
+            System.out.println("No users found.");
+        } else {
+            System.out.println("Registered Users:");
+            for (String user : users) {
+                System.out.println("- " + user);
+            }
+        }
+    }
+
+    public boolean deleteUser() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter username of the user to delete: ");
+        String username = scanner.nextLine();
+        return dbHandler.deleteUser(username);
     }
 }
 

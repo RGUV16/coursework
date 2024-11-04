@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.*;
+import java.sql.Date;
 
 public class DatabaseHandler {
     private static final String URL = "jdbc:mysql://localhost:3306/article_recommendation";
@@ -90,8 +91,9 @@ public class DatabaseHandler {
                 String title = rs.getString("title");
                 String content = rs.getString("content");
                 String author = rs.getString("author");
+                Date date = rs.getDate("date");
 
-                articles.add(new Article(no, category, title, content, author));
+                articles.add(new Article(no, category, title, content, author, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,8 +128,9 @@ public class DatabaseHandler {
                 String title = rs.getString("title");
                 String content = rs.getString("content");
                 String author = rs.getString("author");
+                Date date = rs.getDate("date");
 
-                articles.add(new Article(no, category, title, content, author));
+                articles.add(new Article(no, category, title, content, author, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -156,18 +159,100 @@ public class DatabaseHandler {
     
     //Methods for admin (now)
     public boolean validateAdmin(String username, String password) {
-    String query = "SELECT * FROM admin WHERE username = ? AND password = ?";
-    try (Connection conn = connect();
-         PreparedStatement stmt = conn.prepareStatement(query)) {
-        stmt.setString(1, username);
-        stmt.setString(2, password);
-        ResultSet rs = stmt.executeQuery();
-        return rs.next(); // Returns true if an admin is found
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+        String query = "SELECT * FROM admin WHERE username = ? AND password = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Returns true if an admin is found
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+    
+    // Method to add a new article to the database
+    public boolean addArticle(String category, String title, String content, String author, Date date) {
+        String query = "INSERT INTO articles (category, title, content, author, date) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, category);
+            stmt.setString(2, title);
+            stmt.setString(3, content);
+            stmt.setString(4, author);
+            stmt.setDate(5, date);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
+    // Method to update an existing article in the database
+    public boolean updateArticle(int articleNo, String category, String title, String content, String author, Date date) {
+        String query = "UPDATE articles SET category = ?, title = ?, content = ?, author = ? , date = ? WHERE no = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, category);
+            stmt.setString(2, title);
+            stmt.setString(3, content);
+            stmt.setString(4, author);
+            stmt.setDate(5, date);
+            stmt.setInt(6, articleNo);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Method to delete an article from the database
+    public boolean deleteArticle(int articleNo) {
+        String query = "DELETE FROM articles WHERE no = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, articleNo);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Method to view all users in the system
+    public List<String> getAllUsers() {
+        List<String> users = new ArrayList<>();
+        String query = "SELECT username FROM user";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                users.add(rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    // Method to delete a user from the database
+    public boolean deleteUser(String username) {
+        String query = "DELETE FROM user WHERE username = ?";
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
 
 
