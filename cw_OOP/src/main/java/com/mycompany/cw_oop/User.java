@@ -20,9 +20,22 @@ public class User {
         this.dbHandler = dbHandler;
     }
     
+    // (now)New constructor to set username, password, and email directly
+    public User(DatabaseHandler dbHandler, String username, String password, String email) {
+        this.dbHandler = dbHandler;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+    
     // Getter for username
     public String getUsername() {
         return username;
+    }
+    
+    // now Setter for username
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     // Getter for email (optional, add if needed)
@@ -33,6 +46,11 @@ public class User {
     // Getter for password (optional, typically avoided for security)
     public String getPassword() {
         return password;
+    }
+    
+    // NOW Setter for password
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     private boolean isValidEmail(String email) {

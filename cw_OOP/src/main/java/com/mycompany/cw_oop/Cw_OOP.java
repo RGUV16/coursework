@@ -14,27 +14,41 @@ import java.util.Scanner;
 public class Cw_OOP {
     public static void main(String[] args) {
         DatabaseHandler dbHandler = new DatabaseHandler();
-        User user = new User(dbHandler);
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("WELCOME TO THE PRSONALIZED NEWS RECOMMONDATION SYSTEM!\n\nInsert the number of the selcted choice.");
-        System.out.println("1. Register");
-        System.out.println("2. Login");
-        System.out.println("3. Log Out");
+        System.out.println("WELCOME TO THE PERSONALIZED NEWS RECOMMENDATION SYSTEM!\n\nInsert the number of the selected choice.");
+        System.out.println("1. Register (User)");
+        System.out.println("2. Login (User)");
+        System.out.println("3. Login (Administrator)");
+        System.out.println("4. Log Out");
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         boolean loggedIn = false;
+        User user = null;
+        
         if (choice == 1) {
             if (user.register()) {
+                user = new User(dbHandler);
                 System.out.println("Registration successful! Please log in.");
                 loggedIn = user.login();
             } else {
                 System.out.println("Registration failed.");
             }
         } else if (choice == 2) {
+            user = new User(dbHandler);
             loggedIn = user.login();
         } else if (choice == 3) {
+            Administrator admin = new Administrator(dbHandler, null, null, null, "Admin");
+            if (admin.login()) {
+                System.out.println("Administrator login successful!");
+                admin.manageUsers(); // Optional, to demonstrate admin-specific functions
+                loggedIn = true;
+                user = admin;
+            } else {
+                System.out.println("Administrator login failed. Username or password is incorrect.");
+            }
+        } else if (choice == 4) {
             System.out.println("Logged out. Exiting the system.");
             System.exit(0); // Ends the program if user chooses to log out
         } else {
