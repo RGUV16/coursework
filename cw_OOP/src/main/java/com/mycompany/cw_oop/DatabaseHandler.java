@@ -252,7 +252,38 @@ public class DatabaseHandler {
             return false;
         }
     }
-
+    
+    // Check if the article number exists in the database
+    public boolean articleExists(int articleNo) {
+        String query = "SELECT COUNT(*) FROM articles WHERE no = ?";
+        try (Connection conn = connect(); // Use the existing connect method
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, articleNo);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // If count is greater than 0, article exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    // Check if the username exists in the database
+    public boolean userExists(String username) {
+        String query = "SELECT COUNT(*) FROM user WHERE username = ?";
+        try (Connection conn = connect(); // Use the existing connect method
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // If count is greater than 0, user exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
 

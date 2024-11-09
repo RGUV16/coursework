@@ -69,28 +69,45 @@ public class Administrator extends User {
 
     public boolean updateArticle() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter article number to update: ");
-        int articleNo = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Enter new article category: ");
-        String category = scanner.nextLine();
-        System.out.print("Enter new article title: ");
-        String title = scanner.nextLine();
-        System.out.print("Enter new article content: ");
-        String content = scanner.nextLine();
-        System.out.print("Enter new article author: ");
-        String author = scanner.nextLine();
-        System.out.print("Enter new article date (yyyy-MM-dd): ");
-        String dateString = scanner.nextLine();
+        int attempts = 3; // Allow up to 3 attempts for retrying
+        
+        while (attempts > 0) {
+            System.out.print("Enter article number to update: ");
+            int articleNo = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-        // Parse date string to java.sql.Date
-        Date date = parseDate(dateString);
-        if (date == null) {
-            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-            return false;
+            // Check if article number exists
+            if (!dbHandler.articleExists(articleNo)) {
+                System.out.println("Error: Article number does not exist. Please try again.");
+                attempts--;
+                if (attempts == 0) {
+                    System.out.println("Maximum attempts reached. Exiting update process.");
+                    return false;
+                }
+                continue;
+            }
+
+            System.out.print("Enter new article category: ");
+            String category = scanner.nextLine();
+            System.out.print("Enter new article title: ");
+            String title = scanner.nextLine();
+            System.out.print("Enter new article content: ");
+            String content = scanner.nextLine();
+            System.out.print("Enter new article author: ");
+            String author = scanner.nextLine();
+            System.out.print("Enter new article date (yyyy-MM-dd): ");
+            String dateString = scanner.nextLine();
+
+            // Parse date string to java.sql.Date
+            Date date = parseDate(dateString);
+            if (date == null) {
+                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                return false;
+            }
+
+            return dbHandler.updateArticle(articleNo, category, title, content, author, date);
         }
-
-        return dbHandler.updateArticle(articleNo, category, title, content, author, date);
+        return false;
     }
     
     private Date parseDate(String dateString) {
@@ -105,9 +122,26 @@ public class Administrator extends User {
 
     public boolean deleteArticle() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter article number to delete: ");
-        int articleNo = scanner.nextInt();
-        return dbHandler.deleteArticle(articleNo);
+        int attempts = 3; // Allow up to 3 attempts for retrying
+        
+        while (attempts > 0) {
+            System.out.print("Enter article number to delete: ");
+            int articleNo = scanner.nextInt();
+            
+            // Check if article number exists
+            if (!dbHandler.articleExists(articleNo)) {
+                System.out.println("Error: Article number does not exist. Please try again.");
+                attempts--;
+                if (attempts == 0) {
+                    System.out.println("Maximum attempts reached. Exiting delete process.");
+                    return false;
+                }
+                continue;
+            }
+
+            return dbHandler.deleteArticle(articleNo);
+        }
+        return false;
     }
 
     public void viewAllUsers() {
@@ -124,9 +158,25 @@ public class Administrator extends User {
 
     public boolean deleteUser() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter username of the user to delete: ");
-        String username = scanner.nextLine();
-        return dbHandler.deleteUser(username);
+        int attempts = 3; // Allow up to 3 attempts for retrying
+        
+        while (attempts > 0) {
+            System.out.print("Enter username of the user to delete: ");
+            String username = scanner.nextLine();
+            
+            // Check if username exists
+            if (!dbHandler.userExists(username)) {
+                System.out.println("Error: Username does not exist. Please try again.");
+                attempts--;
+                if (attempts == 0) {
+                 System.out.println("Maximum attempts reached. Exiting delete process.");
+                    return false;
+                }
+                continue;
+            }
+            return dbHandler.deleteUser(username);
+        }
+        return false;
     }
 }
 
