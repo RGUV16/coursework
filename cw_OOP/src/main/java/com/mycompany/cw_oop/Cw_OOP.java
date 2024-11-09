@@ -15,37 +15,74 @@ public class Cw_OOP {
     public static void main(String[] args) {
         DatabaseHandler dbHandler = new DatabaseHandler();
         Scanner scanner = new Scanner(System.in);
-
+        boolean loggedIn = false;
+        User user = null;
+       
         System.out.println("WELCOME TO THE PERSONALIZED NEWS RECOMMENDATION SYSTEM!\n\nInsert the number of the selected choice.");
         System.out.println("1. Register (User)");
         System.out.println("2. Login (User)");
         System.out.println("3. Login (Administrator)");
         System.out.println("4. Log Out");
+        
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
-        boolean loggedIn = false;
-        User user = null;
-        
         if (choice == 1) {
             user = new User(dbHandler);
             if (user.register()) {
                 System.out.println("Registration successful! Please log in.");
-                loggedIn = user.login();
+                // Loop for retrying login if it fails
+                int attempts = 0;
+                while (attempts < 3) { // Allow up to 3 attempts
+                    loggedIn = user.login();
+                    if (loggedIn) {
+                        break; // Exit the loop if login is successful
+                    } else {
+                        attempts++;
+                        System.out.println("Login failed. Please try again (" + (3 - attempts) + " attempts left).");
+                    }
+                }
+                if (!loggedIn) {
+                    System.out.println("Maximum login attempts reached. Exiting the system.");
+                    return; // Exit the program if login fails 3 times
+                }
             } else {
                 System.out.println("Registration failed.");
+                return;
             }
         } else if (choice == 2) {
             user = new User(dbHandler);
-            loggedIn = user.login();
+            int attempts = 0;
+            while (attempts < 3) { // Allow up to 3 attempts
+                loggedIn = user.login();
+                if (loggedIn) {
+                    break; // Exit the loop if login is successful
+                } else {
+                    attempts++;
+                    System.out.println("Login failed. Please try again (" + (3 - attempts) + " attempts left).");
+                }
+            }
+            if (!loggedIn) {
+                System.out.println("Maximum login attempts reached. Exiting the system.");
+                return; // Exit the program if login fails 3 times
+            }
         } else if (choice == 3) {
             Administrator admin = new Administrator(dbHandler, null, null, null, "Admin");
-            if (admin.login()) {
-                System.out.println("Administrator login successful!");
-                loggedIn = true;
-                user = admin;
-            } else {
-                System.out.println("Administrator login failed. Username or password is incorrect.");
+            int attempts = 0;
+            while (attempts < 3) { // Allow up to 3 attempts
+                loggedIn = admin.login();
+                if (loggedIn) {
+                    System.out.println("Administrator login successful!");
+                    user = admin;
+                    break; // Exit the loop if login is successful
+                } else {
+                    attempts++;
+                    System.out.println("Administrator login failed. Please try again (" + (3 - attempts) + " attempts left).");
+                }
+            }
+            if (!loggedIn) {
+                System.out.println("Maximum login attempts reached. Exiting the system.");
+                return; // Exit the program if login fails 3 times
             }
         } else if (choice == 4) {
             System.out.println("Logged out. Exiting the system.");
@@ -176,7 +213,7 @@ public class Cw_OOP {
                             category = "World-news";
                             break;
                         case 11:
-                            category = "Real-estate";
+                            category = "Real-state";
                             break;
                         case 12:
                             category = "Lifestyle";
