@@ -284,6 +284,43 @@ public class DatabaseHandler {
         }
         return false;
     }
+    
+    //Manage profile
+    public boolean updateUserDetails(String username, String newEmail, String newPassword) {
+        String query;
+        boolean updateEmail = newEmail != null && !newEmail.isEmpty();
+        boolean updatePassword = newPassword != null && !newPassword.isEmpty();
+
+        if (updateEmail && updatePassword) {
+            query = "UPDATE user SET email = ?, password = ? WHERE username = ?";
+        } else if (updateEmail) {
+            query = "UPDATE user SET email = ? WHERE username = ?";
+        } else if (updatePassword) {
+            query = "UPDATE user SET password = ? WHERE username = ?";
+        } else {
+            return false; // No updates to perform
+        }
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            if (updateEmail && updatePassword) {
+                stmt.setString(1, newEmail);
+                stmt.setString(2, newPassword);
+                stmt.setString(3, username);
+            } else if (updateEmail) {
+                stmt.setString(1, newEmail);
+                stmt.setString(2, username);
+            } else {
+                stmt.setString(1, newPassword);
+                stmt.setString(2, username);
+            }
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 
 

@@ -81,6 +81,18 @@ public class User {
         password = scanner.nextLine();
         return dbHandler.validateUser(username, password);
     }
+    
+    public boolean updateDetails(DatabaseHandler dbHandler, String newEmail, String newPassword) {
+        if ((newEmail == null || newEmail.isEmpty()) && (newPassword == null || newPassword.isEmpty())) {
+            return false; // No updates provided
+        }
+        boolean success = dbHandler.updateUserDetails(username, newEmail, newPassword);
+        if (success) {
+            if (newEmail != null && !newEmail.isEmpty()) this.email = newEmail; // Update local email
+            if (newPassword != null && !newPassword.isEmpty()) this.password = newPassword; // Update local password
+        }
+        return success;
+    }
 }
 
 
