@@ -60,10 +60,10 @@ public class Cw_OOP {
     private static void registerUser() {
         User user = new User(dbHandler);
         if (user.register()) {
-            System.out.println("Registration successful! Please log in.");
+            System.out.println("\nRegistration successful! Please log in.");
             loginUser(); // Prompt the user to log in after registration
         } else {
-            System.out.println("Registration failed.");
+            System.out.println("\nRegistration failed.");
         }
     }
 
@@ -71,9 +71,9 @@ public class Cw_OOP {
         User user = new User(dbHandler);
         if (attemptLogin(user)) {
             currentUser = user;
-            System.out.println("Login successful! Welcome, " + currentUser.getUsername() + "!");
+            System.out.println("\nLogin successful! Welcome, " + currentUser.getUsername() + "!");
         } else {
-            System.out.println("Maximum login attempts reached. Returning to the main menu.");
+            System.out.println("\nMaximum login attempts reached. Returning to the main menu.");
         }
     }
 
@@ -81,9 +81,9 @@ public class Cw_OOP {
         Administrator admin = new Administrator(dbHandler, null, null, null, "Admin");
         if (attemptLogin(admin)) {
             currentUser = admin;
-            System.out.println("Administrator login successful!");
+            System.out.println("\nAdministrator login successful!");
         } else {
-            System.out.println("Maximum login attempts reached. Returning to the main menu.");
+            System.out.println("\nMaximum login attempts reached. Returning to the main menu.");
         }
     }
 
@@ -94,7 +94,7 @@ public class Cw_OOP {
                 return true;
             } else {
                 attempts++;
-                System.out.println("Login failed. Please try again (" + (3 - attempts) + " attempts left).");
+                System.out.println("\nLogin failed. Please try again (" + (3 - attempts) + " attempts left).");
             }
         }
         return false;
@@ -103,7 +103,7 @@ public class Cw_OOP {
     private static void adminMenu() {
         Administrator admin = (Administrator) currentUser;
 
-        System.out.println("\nAdministrator Menu:");
+        System.out.println("\nAdministrator Menu(Please select an option):");
         System.out.println("1. Add Articles");
         System.out.println("2. Update Articles");
         System.out.println("3. Delete Articles");
@@ -118,23 +118,23 @@ public class Cw_OOP {
             switch (choice) {
                 case 1:
                     if (admin.addArticle()) {
-                        System.out.println("Article added successfully!");
+                        System.out.println("\nArticle added successfully!");
                     } else {
-                        System.out.println("Failed to add article.");
+                        System.out.println("\nFailed to add article.");
                     }
                     break;
                 case 2:
                     if (admin.updateArticle()) {
-                        System.out.println("Article updated successfully!");
+                        System.out.println("\nArticle updated successfully!");
                     } else {
-                        System.out.println("Failed to update article.");
+                        System.out.println("\nFailed to update article.");
                     }
                     break;
                 case 3:
                     if (admin.deleteArticle()) {
-                        System.out.println("Article deleted successfully!");
+                        System.out.println("\nArticle deleted successfully!");
                     } else {
-                        System.out.println("Failed to delete article.");
+                        System.out.println("\nFailed to delete article.");
                     }
                     break;
                 case 4:
@@ -142,22 +142,22 @@ public class Cw_OOP {
                     break;
                 case 5:
                     if (admin.deleteUser()) {
-                        System.out.println("User deleted successfully!");
+                        System.out.println("\nUser deleted successfully!");
                     } else {
-                        System.out.println("Failed to delete user.");
+                        System.out.println("\nFailed to delete user.");
                     }
                     break;
                 case 6:
                     logout();
                     return; // Exit admin menu
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }
         }
     }
 
     private static void userMenu() {
-        System.out.println("\nUser Menu:");
+        System.out.println("\nUser Menu (Please select an option):");
         System.out.println("1. View All Articles");
         System.out.println("2. Get Recommendations");
         System.out.println("3. Manage Profile");
@@ -182,7 +182,7 @@ public class Cw_OOP {
                     logout();
                     return; // Exit user menu
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }
         }
     }
@@ -263,6 +263,9 @@ public class Cw_OOP {
                 case 14:
                     category = "Technological";
                     break;
+                case 15:
+                    System.out.println("Returning to the User Menu...");
+                    break; // Exit the loop and return to the user menu
                 default:
                     System.out.println("Invalid choice.");
                     return;
@@ -324,13 +327,8 @@ public class Cw_OOP {
         }
     }
 
-    private static void getRecommendations() {
-        // Logic to fetch recommendations based on user's history or preferences
-        System.out.println("Fetching recommendations for you...");
-    }
-
     private static void manageProfile() {
-        System.out.println("Manage Profile:");
+        System.out.println("Manage Profile (Please select an option):");
         System.out.println("1. Update Email");
         System.out.println("2. Update Password");
         System.out.println("3. Update Both Email and Password");
@@ -356,7 +354,7 @@ public class Cw_OOP {
     }
 
     private static void logout() {
-        System.out.println("Logging out...");
+        System.out.println("Logging out...\n");
         currentUser = null; // Clear the current user session
     }
 }
