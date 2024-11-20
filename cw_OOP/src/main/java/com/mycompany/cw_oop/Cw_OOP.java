@@ -172,7 +172,8 @@ public class Cw_OOP {
                     viewArticles();
                     break;
                 case 2:
-                    getRecommendations();
+                    RecommendationEngine recommendationEngine = new RecommendationEngine(currentUser.getUsername());
+                    recommendationEngine.getRecommendations(); // Fetch and display recommendations
                     break;
                 case 3:
                     manageProfile();
