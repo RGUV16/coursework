@@ -338,8 +338,16 @@ public class Cw_OOP {
 
         String newEmail = null, newPassword = null;
         if (choice == 1 || choice == 3) {
-            System.out.print("Enter new email: ");
-            newEmail = scanner.nextLine();
+            boolean validEmail = false;
+            while (!validEmail) {
+                System.out.print("Enter new email: ");
+                newEmail = scanner.nextLine();
+                if (DatabaseHandler.isValidEmail(newEmail)) {
+                    validEmail = true; // Exit loop if email is valid
+                } else {
+                    System.out.println("Invalid email format. Please try again.");
+                }
+            }
         }
         if (choice == 2 || choice == 3) {
             System.out.print("Enter new password: ");

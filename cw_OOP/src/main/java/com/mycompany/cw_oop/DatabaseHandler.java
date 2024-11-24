@@ -285,6 +285,12 @@ public class DatabaseHandler {
         return false;
     }
     
+    // Static method to validate email format
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        return email != null && email.matches(emailRegex);
+    }
+    
     //Manage profile
     public boolean updateUserDetails(String username, String newEmail, String newPassword) {
         String query;
