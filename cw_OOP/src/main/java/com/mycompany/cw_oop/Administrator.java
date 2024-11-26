@@ -105,7 +105,15 @@ public class Administrator extends User {
                 return false;
             }
 
-            return dbHandler.updateArticle(articleNo, category, title, content, author, date);
+            // Call the updateArticle method from DatabaseHandler
+            boolean isUpdated = dbHandler.updateArticle(articleNo, category, title, content, author, date);
+            if (isUpdated) {
+                System.out.println("Article updated successfully.");
+                return true;
+            } else {
+                System.out.println("Failed to update the article. Please try again.");
+                return false;
+            }
         }
         return false;
     }
