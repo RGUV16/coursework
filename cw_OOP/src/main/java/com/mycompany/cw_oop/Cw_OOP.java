@@ -17,7 +17,7 @@ public class Cw_OOP {
     private static Scanner scanner = new Scanner(System.in); // Shared scanner instance
 
     public static void main(String[] args) {
-        System.out.println("WELCOME TO THE PERSONALIZED NEWS RECOMMENDATION SYSTEM!\n\nSelect an option by entering its number.");
+        System.out.println("WELCOME TO THE PERSONALIZED NEWS RECOMMENDATION SYSTEM!\n\nSelect an option to start the journey with us.");
 
         // Main menu loop
         while (true) {
@@ -40,7 +40,7 @@ public class Cw_OOP {
                     loginAdmin();
                     break;
                 case 4:
-                    System.out.println("Exiting the system.");
+                    System.out.println("Exiting the system. Thank you for using our system. Have a nice day!");
                     return; // Exit the program
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -103,15 +103,15 @@ public class Cw_OOP {
     private static void adminMenu() {
         Administrator admin = (Administrator) currentUser;
 
-        System.out.println("\nAdministrator Menu(Please select an option):");
-        System.out.println("1. Add Articles");
-        System.out.println("2. Update Articles");
-        System.out.println("3. Delete Articles");
-        System.out.println("4. View Users");
-        System.out.println("5. Delete Users");
-        System.out.println("6. Log Out");
-
         while (true) {
+            System.out.println("\nAdministrator Menu(Please select an option):");
+            System.out.println("1. Add Article");
+            System.out.println("2. Update Article");
+            System.out.println("3. Delete Article");
+            System.out.println("4. View Users");
+            System.out.println("5. Delete User");
+            System.out.println("6. Return to the main menu");
+ 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -157,13 +157,13 @@ public class Cw_OOP {
     }
 
     private static void userMenu() {
-        System.out.println("\nUser Menu (Please select an option):");
-        System.out.println("1. View All Articles");
-        System.out.println("2. Get Recommendations");
-        System.out.println("3. Manage Profile");
-        System.out.println("4. Log Out");
-
         while (true) {
+            System.out.println("\nUser Menu (Please select an option):");
+            System.out.println("1. View All Articles");
+            System.out.println("2. Get Recommendations");
+            System.out.println("3. Manage Profile");
+            System.out.println("4. Retunr to the main menu");
+
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -188,24 +188,24 @@ public class Cw_OOP {
     }
 
     private static void viewArticles() {
-        System.out.println("Choose a category or view all articles:");
-        System.out.println("1. View Available Articles (All Categories)");
-        System.out.println("2. View Business Articles");
-        System.out.println("3. View Sports Articles");
-        System.out.println("4. View Science Articles");
-        System.out.println("5. View Eductional Articles");
-        System.out.println("6. View Political Articles");
-        System.out.println("7. View Health Articles");
-        System.out.println("8. View Automotive (Vehicle-related) Articles");
-        System.out.println("9. View Weather Articles");
-        System.out.println("10. View World-news Articles");
-        System.out.println("11. View Real-state Articles");
-        System.out.println("12. View Lifestyle Articles");
-        System.out.println("13. View Entertainment Articles");
-        System.out.println("14. View Technological Articles");
-        System.out.println("15. Return to the User Menu");
-                
         while (true) {
+            System.out.println("Choose a category or view all articles:");
+            System.out.println("1. View Available Articles (All Categories)");
+            System.out.println("2. View Business Articles");
+            System.out.println("3. View Sports Articles");
+            System.out.println("4. View Science Articles");
+            System.out.println("5. View Eductional Articles");
+            System.out.println("6. View Political Articles");
+            System.out.println("7. View Health Articles");
+            System.out.println("8. View Automotive (Vehicle-related) Articles");
+            System.out.println("9. View Weather Articles");
+            System.out.println("10. View World-news Articles");
+            System.out.println("11. View Real-state Articles");
+            System.out.println("12. View Lifestyle Articles");
+            System.out.println("13. View Entertainment Articles");
+            System.out.println("14. View Technological Articles");
+            System.out.println("15. Return to the User Menu");
+                       
             int articleChoice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
         
@@ -263,11 +263,8 @@ public class Cw_OOP {
                 case 14:
                     category = "Technological";
                     break;
-                case 15:
-                    System.out.println("Returning to the User Menu...");
-                    break; // Exit the loop and return to the user menu
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice. Please try again!");
                     return;
             }
 
@@ -328,13 +325,23 @@ public class Cw_OOP {
     }
 
     private static void manageProfile() {
-        System.out.println("Manage Profile (Please select an option):");
-        System.out.println("1. Update Email");
-        System.out.println("2. Update Password");
-        System.out.println("3. Update Both Email and Password");
+        int choice;
+        // Loop to ensure valid input
+        while (true) {
+            System.out.println("Manage Profile (Please select an option):");
+            System.out.println("1. Update Email");
+            System.out.println("2. Update Password");
+            System.out.println("3. Update Both Email and Password");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            
+            if (choice == 1 || choice == 2 || choice == 3) {
+                break; // Exit loop if valid choice
+            } else {
+                System.out.println("Invalid choice, Please try again!");
+            }
+        }
 
         String newEmail = null, newPassword = null;
         if (choice == 1 || choice == 3) {
@@ -362,7 +369,7 @@ public class Cw_OOP {
     }
 
     private static void logout() {
-        System.out.println("Logging out...\n");
+        System.out.println("Logging out from the menu...\n");
         currentUser = null; // Clear the current user session
     }
 }
