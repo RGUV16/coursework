@@ -28,19 +28,19 @@ public class DatabaseHandler {
 
     public DatabaseHandler() {
         categoryKeywords = new HashMap<>();
-        categoryKeywords.put("Business", Arrays.asList("companies", "business", "strategy", "economic"));
-        categoryKeywords.put("Sports", Arrays.asList("sports",  "player", "championship"));
-        categoryKeywords.put("Science", Arrays.asList("scientists", "Research", "scientific"));
-        categoryKeywords.put("Educational", Arrays.asList("education", "learning", "Schools", "students"));
-        categoryKeywords.put("Political", Arrays.asList("Political", "United", "Global", "Nations", "election"));
-        categoryKeywords.put("Health", Arrays.asList("treatment", "disease", "healthcare", "hospitals", "medical"));
-        categoryKeywords.put("Automotive", Arrays.asList("automotive", "models", "vehicles", "cars", "insurance"));
-        categoryKeywords.put("Weather", Arrays.asList("weather", "hurricane", "temperatures", "emergency"));
-        categoryKeywords.put("World-news", Arrays.asList("international", "Countries", "climate", "security", "Tensions"));
-        categoryKeywords.put("Real-state", Arrays.asList("housing", "Estate", "properties", "construction"));
-        categoryKeywords.put("Lifestyle", Arrays.asList("lifestyle", "stress", "well-being", "living", "daily"));
+        categoryKeywords.put("Business", Arrays.asList("sustainability", "business", "strategies", "economy"));
+        categoryKeywords.put("Sports", Arrays.asList("sports",  "players", "championship", "Football"));
+        categoryKeywords.put("Science", Arrays.asList("scientists", "Research", "technology", "discoveries"));
+        categoryKeywords.put("Educational", Arrays.asList("education", "learning", "schools", "students"));
+        categoryKeywords.put("Political", Arrays.asList("political", "leaders", "Global", "nations", "election"));
+        categoryKeywords.put("Health", Arrays.asList("treatment", "disease", "health", "hospitals", "medical"));
+        categoryKeywords.put("Automotive", Arrays.asList("automotive", "models", "vehicles", "cars"));
+        categoryKeywords.put("Weather", Arrays.asList("weather", "hurricane", "temperatures", "climate"));
+        categoryKeywords.put("World-news", Arrays.asList("international", "Countries", "geopolitics", "security"));
+        categoryKeywords.put("Real-state", Arrays.asList("housing", "real estate", "properties", "construction"));
+        categoryKeywords.put("Lifestyle", Arrays.asList("lifestyle", "stress", "well-being", "living"));
         categoryKeywords.put("Entertainment", Arrays.asList("audiences", "media", "entertainment", "music", "streaming"));
-        categoryKeywords.put("Technological", Arrays.asList("technology", "industries", "Advancements", "innovation", "Artificial"));
+        categoryKeywords.put("Technological", Arrays.asList("technology", "industries", "Advancements", "innovation", "AI"));
     }
     
     private Connection connect() throws SQLException {

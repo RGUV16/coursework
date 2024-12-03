@@ -162,7 +162,7 @@ public class Cw_OOP {
             System.out.println("1. View All Articles");
             System.out.println("2. Get Recommendations");
             System.out.println("3. Manage Profile");
-            System.out.println("4. Retunr to the main menu");
+            System.out.println("4. Return to the main menu");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -211,7 +211,7 @@ public class Cw_OOP {
         
             // Log out if the user chooses the option
             if (articleChoice == 15) {
-                System.out.println("Returning to the User Menu...");
+                System.out.println("Returning to the User Menu...\n\n");
                 break; // Exit the loop and return to the user menu
             }
 
