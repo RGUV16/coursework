@@ -4,10 +4,6 @@
  */
 package com.mycompany.cw_oop;
 
-/**
- *
- * @author HP
- */
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

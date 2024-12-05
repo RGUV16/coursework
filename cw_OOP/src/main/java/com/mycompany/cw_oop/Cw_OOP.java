@@ -4,10 +4,6 @@
 
 package com.mycompany.cw_oop;
 
-/**
- *
- * @author HP
- */
 import java.util.List;
 import java.util.Scanner;
 

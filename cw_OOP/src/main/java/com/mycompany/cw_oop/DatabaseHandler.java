@@ -4,10 +4,6 @@
  */
 package com.mycompany.cw_oop;
 
-/**
- *
- * @author HP
- */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

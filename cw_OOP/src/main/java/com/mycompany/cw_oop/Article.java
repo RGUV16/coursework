@@ -6,10 +6,6 @@ package com.mycompany.cw_oop;
 
 import java.sql.Date;
 
-/**
- *
- * @author HP
- */
 public class Article {
     private int no;
     private String category;
